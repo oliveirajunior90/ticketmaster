@@ -8,9 +8,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.example.ticketmaster.event.exception.EventCapacityExceededException;
+import org.example.ticketmaster.event.exception.InvalidEventCapacityException;
 import org.example.ticketmaster.event.valueobject.Venue;
+import org.example.ticketmaster.order.exception.InvalidOrderQuantityException;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -67,16 +69,16 @@ public class Event {
 
     public void checkCapacity() {
         if (capacity == null || capacity <= 0) {
-            throw new IllegalStateException("Event has no remaining capacity.");
+            throw new InvalidEventCapacityException(capacity);
         }
     }
 
     public void reserveCapacity(int quantity) {
         if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero.");
+            throw new InvalidOrderQuantityException(quantity);
         }
         if (capacity == null || capacity < quantity) {
-            throw new IllegalStateException("Event has no remaining capacity.");
+            throw new EventCapacityExceededException(this.id, quantity, capacity != null ? capacity : 0);
         }
         capacity -= quantity;
         if (capacity == 0) {
@@ -86,5 +88,14 @@ public class Event {
 
     public UUID getId() {
         return id;
+    }
+
+    // Package-private methods for testing purposes
+    void setId(UUID id) {
+        this.id = id;
+    }
+
+    void setStatus(EventStatusEnum status) {
+        this.status = status;
     }
 }

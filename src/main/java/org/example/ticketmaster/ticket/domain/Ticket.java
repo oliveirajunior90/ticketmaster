@@ -27,7 +27,9 @@ public class Ticket {
     private TicketId ticketId;
 
     private UUID eventId;
+
     private String seatNumber;
+
     @Embedded
     private Money price;
 
@@ -57,5 +59,9 @@ public class Ticket {
 
     public Money getPrice() {
         return price;
+    }
+
+    public UUID getEventId() {
+        return eventId;
     }
 }

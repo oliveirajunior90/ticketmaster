@@ -1,4 +1,4 @@
-package org.example.ticketmaster.order.domain.application.createorder;
+package org.example.ticketmaster.order.application.createorder;
 
 import java.util.UUID;
 

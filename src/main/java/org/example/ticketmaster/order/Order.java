@@ -1,8 +1,10 @@
-package org.example.ticketmaster.order.domain;
+package org.example.ticketmaster.order;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.example.ticketmaster.shared.Money;
 import org.example.ticketmaster.shared.valueobject.EventId;
@@ -14,10 +16,15 @@ import java.util.UUID;
 @Table(name = "orders")
 public class Order {
 
-    @EmbeddedId
+    @Id
+    private Integer identifier;
+
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "order_id", nullable = false))
     private OrderId id;
 
     @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "event_id", nullable = false))
     private EventId eventId;
 
     private UUID customerId;
@@ -28,7 +35,6 @@ public class Order {
     private Money total;
 
     public Order(UUID customerId, UUID eventId, Integer quantity) {
-        this.id = new OrderId(UUID.randomUUID());
         this.eventId = new EventId(eventId);
         this.customerId = customerId;
         this.quantity = quantity;

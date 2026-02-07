@@ -1,7 +1,7 @@
 package org.example.ticketmaster.shared.valueobject;
 
 import jakarta.persistence.Embeddable;
-import org.example.ticketmaster.order.domain.Order;
+import org.example.ticketmaster.order.Order;
 
 import java.util.UUID;
 

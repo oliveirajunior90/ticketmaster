@@ -1,8 +1,8 @@
-package org.example.ticketmaster.order.domain.application.createorder;
+package org.example.ticketmaster.order.application.createorder;
 
-import org.example.ticketmaster.order.domain.Order;
-import org.example.ticketmaster.order.domain.OrderRepository;
-import org.example.ticketmaster.order.domain.event.OrderCreatedEvent;
+import org.example.ticketmaster.order.Order;
+import org.example.ticketmaster.order.OrderRepository;
+import org.example.ticketmaster.order.event.OrderCreatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

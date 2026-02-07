@@ -2,13 +2,11 @@ package org.example.ticketmaster.ticket.domain.application;
 
 import org.example.ticketmaster.event.Event;
 import org.example.ticketmaster.event.EventRepository;
-import org.example.ticketmaster.order.domain.event.OrderCreatedEvent;
+import org.example.ticketmaster.order.event.OrderCreatedEvent;
 import org.example.ticketmaster.ticket.domain.Ticket;
 import org.example.ticketmaster.ticket.domain.TicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 @Service
 public class CreateTicketOnOrderCreated {
@@ -23,7 +21,6 @@ public class CreateTicketOnOrderCreated {
     }
 
     @Transactional
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handle(OrderCreatedEvent orderHandler) {
         if (orderHandler.getQuantity() == null || orderHandler.getQuantity() <= 0) {
             return;
