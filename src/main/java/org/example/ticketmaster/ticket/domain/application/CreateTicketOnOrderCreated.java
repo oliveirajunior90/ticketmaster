@@ -33,7 +33,7 @@ public class CreateTicketOnOrderCreated {
         eventRepository.save(event);
 
         for (int i = 0; i < orderHandler.getQuantity(); i++) {
-            Ticket ticket = new Ticket(orderHandler.getEventId(), orderHandler.getOrderId());
+            Ticket ticket = new Ticket(orderHandler.getEventId(), orderHandler.getOrderId(), event.getTicketPrice());
             ticketRepository.save(ticket);
         }
     }

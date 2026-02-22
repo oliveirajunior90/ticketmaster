@@ -19,12 +19,8 @@ import java.util.UUID;
 public class Ticket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
-
-    @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "ticket_id"))
-    private TicketId ticketId;
 
     private UUID eventId;
 
@@ -43,10 +39,11 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(UUID eventId, OrderId orderId) {
+    public Ticket(UUID eventId, OrderId orderId, Money price) {
         this.eventId = eventId;
         this.orderId = orderId;
         this.status = TicketStatusEnum.RESERVED;
+        this.price = price;
     }
 
     public boolean isAvailable() {

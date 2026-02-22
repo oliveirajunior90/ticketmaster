@@ -10,39 +10,46 @@ import java.util.Objects;
 public class Venue implements ValueObject<Venue> {
 
     @Column(nullable = false, length = 128)
-    private String venue_name;
+    private String venueName;
+
     @Column(length = 128)
-    private String venue_city;
+    private String venueCity;
+
+    @Column (length = 128)
+    private String venueAddress;
 
     public Venue() { }
 
-    public Venue(String venue_name, String venue_city, String venue_address) {
-        if (venue_name == null || venue_name.isBlank()) throw new IllegalArgumentException("Nome do local é obrigatório");
-        if(venue_city == null || venue_city.isBlank()) throw new IllegalArgumentException("Cidade é Obrigatório");
+    public Venue(String venueName, String venueCity, String venueAddress) {
+        if (venueName == null || venueName.isBlank()) throw new IllegalArgumentException("Nome do local é obrigatório");
+        if(venueCity == null || venueCity.isBlank()) throw new IllegalArgumentException("Cidade é Obrigatório");
+        if(venueAddress == null || venueAddress.isBlank()) throw new IllegalArgumentException("Logradouro é obrigatório");
 
-        this.venue_name = venue_name;
-        this.venue_city = venue_city;
+        this.venueName = venueName;
+        this.venueCity = venueCity;
+        this.venueAddress = venueAddress;
     }
 
-    public String getName() { return venue_name; }
-    public String getCity() { return venue_city; }
+    public String getName() { return venueName; }
+    public String getCity() { return venueCity; }
+    public String getAddress() { return venueAddress; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Venue other = (Venue) o;
-        return Objects.equals(venue_name, other.venue_name) && Objects.equals(venue_city, other.venue_city);
+        return Objects.equals(venueName, other.venueName) && Objects.equals(venueCity, other.venueCity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(venue_name, venue_city);
+        return Objects.hash(venueName, venueCity);
     }
 
     @Override
     public String toString() {
-        return venue_name + (venue_city != null ? ", " + venue_city : "");
+        return venueName + (venueCity != null ? ", " + venueCity : "");
     }
 
     public boolean sameValueAs(Venue other) {

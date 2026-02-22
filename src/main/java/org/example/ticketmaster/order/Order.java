@@ -4,6 +4,7 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.example.ticketmaster.shared.Money;
@@ -13,15 +14,11 @@ import org.example.ticketmaster.shared.valueobject.OrderId;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
 public class Order {
 
     @Id
-    private Integer identifier;
-
-    @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "order_id", nullable = false))
-    private OrderId id;
+    @GeneratedValue
+    private UUID id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "event_id", nullable = false))
@@ -47,7 +44,7 @@ public class Order {
         return total;
     }
 
-    public OrderId getId() {
+    public UUID getId() {
         return id;
     }
 

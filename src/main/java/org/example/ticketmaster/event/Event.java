@@ -12,12 +12,12 @@ import org.example.ticketmaster.event.exception.EventCapacityExceededException;
 import org.example.ticketmaster.event.exception.InvalidEventCapacityException;
 import org.example.ticketmaster.event.valueobject.Venue;
 import org.example.ticketmaster.order.exception.InvalidOrderQuantityException;
+import org.example.ticketmaster.shared.Money;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "event")
 public class Event {
 
     @Id
@@ -48,6 +48,12 @@ public class Event {
     @Column(nullable = false)
     private Integer capacity;
 
+    @Column(nullable = false)
+    private Money ticketPrice;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EventStatusEnum status; // DRAFT, ACTIVE, SUSPENDED, SOLD_OUT, FINISHED
@@ -55,7 +61,7 @@ public class Event {
     public Event() {}
 
     public Event(String name, String artist, Venue venue, LocalDateTime startDate,
-                 LocalDateTime endDate, LocalDateTime salesStart, LocalDateTime salesEnd, Integer capacity) {
+                 LocalDateTime endDate, LocalDateTime salesStart, LocalDateTime salesEnd, Integer capacity, Money ticketPrice) {
         this.name = name;
         this.artist = artist;
         this.venue = venue;
@@ -64,7 +70,9 @@ public class Event {
         this.salesStart = salesStart;
         this.salesEnd = salesEnd;
         this.capacity = capacity;
+        this.ticketPrice = ticketPrice;
         this.status = EventStatusEnum.DRAFT;
+        this.createdAt = LocalDateTime.now();
     }
 
     public void checkCapacity() {
@@ -84,6 +92,10 @@ public class Event {
         if (capacity == 0) {
             status = EventStatusEnum.SOLD_OUT;
         }
+    }
+
+    public Money getTicketPrice() {
+        return ticketPrice;
     }
 
     public UUID getId() {

@@ -1,16 +1,11 @@
 package org.example.ticketmaster.event.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import org.example.ticketmaster.event.Event;
 import org.example.ticketmaster.event.EventStatusEnum;
 import org.example.ticketmaster.event.valueobject.Venue;
+import org.example.ticketmaster.shared.Money;
 
-import java.time.Instant;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,6 +21,7 @@ public class EventBuilder {
     private LocalDateTime salesEnd;
     private Integer capacity;
     private EventStatusEnum status;
+    private Money ticketPrice;
 
     public EventBuilder() {
         this.id = null;
@@ -36,12 +32,13 @@ public class EventBuilder {
         this.salesStart = LocalDateTime.now().minusDays(5);
         this.salesEnd = LocalDateTime.now().minusDays(1);
         this.capacity = 1000;
+        this.ticketPrice = new Money(new BigDecimal("50.00"));
         this.status = null;
     }
 
     public Event build() throws NoSuchFieldException, IllegalAccessException {
 
-        Event event = new Event(name, artist, venue, startDate, endDate, salesStart, salesEnd, capacity);
+        Event event = new Event(name, artist, venue, startDate, endDate, salesStart, salesEnd, capacity, ticketPrice);
 
         if(status != null) {
             event
@@ -85,17 +82,22 @@ public class EventBuilder {
         return this;
     }
 
+    public EventBuilder withTicketPrice(Money ticketPrice) {
+        this.ticketPrice = ticketPrice;
+        return this;
+    }
+
     public EventBuilder withCapacity(Integer capacity) {
         this.capacity = capacity;
         return this;
     }
 
-    public EventBuilder withSalesStart(LocalDateTime salesStart) {
+    public EventBuilder withSalesStartAt(LocalDateTime salesStart) {
         this.salesStart = salesStart;
         return this;
     }
 
-    public EventBuilder withSalesEnd(LocalDateTime salesEnd) {
+    public EventBuilder withSalesEndAt(LocalDateTime salesEnd) {
         this.salesEnd = salesEnd;
         return this;
     }
