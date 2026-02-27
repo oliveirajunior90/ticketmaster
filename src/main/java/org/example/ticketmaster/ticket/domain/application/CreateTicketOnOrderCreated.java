@@ -5,6 +5,7 @@ import org.example.ticketmaster.event.EventRepository;
 import org.example.ticketmaster.order.event.OrderCreatedEvent;
 import org.example.ticketmaster.ticket.domain.Ticket;
 import org.example.ticketmaster.ticket.domain.TicketRepository;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class CreateTicketOnOrderCreated {
     }
 
     @Transactional
+    @EventListener
     public void handle(OrderCreatedEvent orderHandler) {
         if (orderHandler.getQuantity() == null || orderHandler.getQuantity() <= 0) {
             return;
