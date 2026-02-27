@@ -7,15 +7,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.example.ticketmaster.shared.Money;
 import org.example.ticketmaster.shared.valueobject.OrderId;
-import org.example.ticketmaster.shared.valueobject.TicketId;
 
 import java.util.UUID;
 
 @Entity
+@Table(name = "tickets")
 public class Ticket {
 
     @Id
@@ -27,6 +27,7 @@ public class Ticket {
     private String seatNumber;
 
     @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "price_amount"))
     private Money price;
 
     @Embedded

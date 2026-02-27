@@ -14,6 +14,7 @@ import org.example.ticketmaster.shared.valueobject.OrderId;
 import java.util.UUID;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -29,6 +30,7 @@ public class Order {
     private Integer quantity;
 
     @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "total_amount"))
     private Money total;
 
     public Order(UUID customerId, UUID eventId, Integer quantity) {

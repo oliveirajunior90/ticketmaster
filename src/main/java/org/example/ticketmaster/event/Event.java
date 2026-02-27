@@ -1,5 +1,7 @@
 package org.example.ticketmaster.event;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "events")
 public class Event {
 
     @Id
@@ -31,27 +34,33 @@ public class Event {
     private String artist;
 
     @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "venueName", column = @Column(name = "venue_name", nullable = false, length = 128)),
+        @AttributeOverride(name = "venueCity", column = @Column(name = "venue_city", length = 128)),
+        @AttributeOverride(name = "venueAddress", column = @Column(name = "venue_address", length = 128))
+    })
     private Venue venue;
 
-    @Column(nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(nullable = false)
+    @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @Column(nullable = false)
+    @Column(name = "sales_start", nullable = false)
     private LocalDateTime salesStart;
 
-    @Column(nullable = false)
+    @Column(name = "sales_end", nullable = false)
     private LocalDateTime salesEnd;
 
     @Column(nullable = false)
     private Integer capacity;
 
-    @Column(nullable = false)
+    @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "ticket_price_amount", nullable = false))
     private Money ticketPrice;
 
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
@@ -96,6 +105,46 @@ public class Event {
 
     public Money getTicketPrice() {
         return ticketPrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public LocalDateTime getSalesStart() {
+        return salesStart;
+    }
+
+    public LocalDateTime getSalesEnd() {
+        return salesEnd;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public EventStatusEnum getStatus() {
+        return status;
     }
 
     public UUID getId() {
